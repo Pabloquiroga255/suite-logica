@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Suite Matematica y Logica | Proyecto Integrador</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Header Principal -->
+  <header class="header">
+    <div class="container header-container">
+      <div class="brand">
+        <span class="badge">PROYECTO INTEGRADOR</span>
+        <h1>Suite Matematica &amp; Algoritmica</h1>
+        <p class="subtitle">Logica Computacional, Algebra Cuadratica y Precision Numerica</p>
+      </div>
+      <div class="student-info">
+        <div class="info-tag"><strong>Estudiante:</strong> <span class="placeholder">[Tu Nombre Completo]</span></div>
+        <div class="info-tag"><strong>Repositorio:</strong> <span class="placeholder">[git: tu-usuario/suite-logica]</span></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navegacion por pestañas -->
+  <nav class="nav-bar">
+    <div class="container nav-container">
+      <button class="nav-tab active" data-tab="tab-modulo-a">Modulo A: Simulador BairesDev</button>
+      <button class="nav-tab" data-tab="tab-modulo-b">Modulo B: Motor Cuadratico &amp; Parabola</button>
+      <button class="nav-tab" data-tab="tab-modulo-c">Modulo C: Detector de Secuencias</button>
+      <button class="nav-tab highlight" data-tab="tab-modulo-d">Modulo D: Suite de Pruebas Unitarias</button>
+    </div>
+  </nav>
+
+  <!-- Contenedor Principal -->
+  <main class="container content">
+
+    <!-- MODULO A -->
+    <section id="tab-modulo-a" class="tab-pane active">
+      <div class="section-header">
+        <h2>Modulo A: Retos Logicos BairesDev</h2>
+        <p>Herramientas interactivas para simular problemas tecnicos.</p>
+      </div>
+      <div class="grid-2col">
+        <div class="card">
+          <div class="card-header"><span class="card-num">#01</span><h3>Probabilidad de Dados</h3></div>
+          <p class="card-desc">Probabilidad exacta de obtener una suma objetivo con 2 dados.</p>
+          <div class="form-group"><label for="input-dados-suma">Suma Objetivo (2 a 12):</label><input type="number" id="input-dados-suma" value="7" min="2" max="12"></div>
+          <button class="btn btn-primary" id="btn-calc-dados">Calcular Probabilidad</button>
+          <div class="result-box" id="res-dados">Esperando calculo...</div>
+        </div>
+        <div class="card">
+          <div class="card-header"><span class="card-num">#02</span><h3>Torneo Round-Robin</h3></div>
+          <p class="card-desc">Partidos jugados todos contra todos: C(n,2) = n*(n-1)/2.</p>
+          <div class="form-group"><label for="input-torneo-equipos">Equipos (n):</label><input type="number" id="input-torneo-equipos" value="4" min="2"></div>
+          <button class="btn btn-primary" id="btn-calc-torneo">Calcular Partidos</button>
+          <div class="result-box" id="res-torneo">Esperando calculo...</div>
+        </div>
+        <div class="card">
+          <div class="card-header"><span class="card-num">#03</span><h3>Divisibilidad en O(1)</h3></div>
+          <p class="card-desc">Enteros positivos menores a limite divisibles por divisor.</p>
+          <div class="form-row">
+            <div class="form-group"><label for="input-div-limite">Limite Superior:</label><input type="number" id="input-div-limite" value="904"></div>
+            <div class="form-group"><label for="input-div-divisor">Divisor:</label><input type="number" id="input-div-divisor" value="3"></div>
+          </div>
+          <button class="btn btn-primary" id="btn-calc-div">Calcular Multiplos</button>
+          <div class="result-box" id="res-div">Esperando calculo...</div>
+        </div>
+        <div class="card">
+          <div class="card-header"><span class="card-num">#04</span><h3>Logistica y Transporte</h3></div>
+          <p class="card-desc">Viajes minimos requeridos segun capacidad: ceil(total / cap).</p>
+          <div class="form-row">
+            <div class="form-group"><label for="input-botellas-total">Total Botellas:</label><input type="number" id="input-botellas-total" value="17"></div>
+            <div class="form-group"><label for="input-botellas-cap">Capacidad Viaje:</label><input type="number" id="input-botellas-cap" value="3"></div>
+          </div>
+          <button class="btn btn-primary" id="btn-calc-botellas">Calcular Viajes</button>
+          <div class="result-box" id="res-botellas">Esperando calculo...</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MODULO B -->
+    <section id="tab-modulo-b" class="tab-pane">
+      <div class="section-header">
+        <h2>Modulo B: Motor Cuadratico &amp; Parabola</h2>
+        <p>Calculadora y graficador de ax^2 + bx + c = 0 con precision numerica.</p>
+      </div>
+      <div class="grid-2col">
+        <div class="card">
+          <h3>Coeficientes</h3>
+          <div class="form-row">
+            <div class="form-group"><label for="coef-a">a (x^2):</label><input type="number" id="coef-a" step="any" value="1"></div>
+            <div class="form-group"><label for="coef-b">b (x):</label><input type="number" id="coef-b" step="any" value="-5"></div>
+            <div class="form-group"><label for="coef-c">c (cte):</label><input type="number" id="coef-c" step="any" value="6"></div>
+          </div>
+          <div class="presets-row">
+            <span>Presets:</span>
+            <button class="btn-chip" data-a="1" data-b="-5" data-c="6">x^2 - 5x + 6</button>
+            <button class="btn-chip" data-a="1" data-b="-4" data-c="4">x^2 - 4x + 4</button>
+            <button class="btn-chip" data-a="1" data-b="2" data-c="5">x^2 + 2x + 5</button>
+            <button class="btn-chip alert-chip" data-a="1" data-b="100000000" data-c="1">Cascarita b^2 &gt;&gt; 4ac</button>
+          </div>
+          <button class="btn btn-success" id="btn-resolver-cuadratica">Resolver y Graficar</button>
+          <div class="solver-output" id="cuadratica-resultado">
+            <div class="math-prop"><strong>Ecuacion:</strong> <span id="out-eq">x^2 - 5x + 6 = 0</span></div>
+            <div class="math-prop"><strong>Discriminante (Delta):</strong> <span id="out-delta">1.0000</span></div>
+            <div class="math-prop"><strong>Tipo:</strong> <span id="out-tipo">Dos raices reales distintas</span></div>
+            <div class="math-prop"><strong>Vertice (h, k):</strong> <span id="out-vertice">(2.50, -0.25)</span></div>
+            <div class="math-prop highlight-prop"><strong>Raices:</strong> <span id="out-raices">x1 = 3.0000, x2 = 2.0000</span></div>
+          </div>
+        </div>
+        <div class="card canvas-card">
+          <div class="canvas-header"><h3>Visualizacion Canvas</h3><span class="badge-canvas">HTML5 Canvas</span></div>
+          <div class="canvas-wrapper"><canvas id="parabola-canvas" width="480" height="340"></canvas></div>
+          <p class="caption-canvas">Ejes cartesianos en gris. Vertice en verde y raices destacadas en rojo/azul.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- MODULO C -->
+    <section id="tab-modulo-c" class="tab-pane">
+      <div class="section-header"><h2>Modulo C: Detector de Secuencias</h2><p>Identificador de progresiones aritmeticas, geometricas y de segundo orden.</p></div>
+      <div class="card">
+        <div class="form-group"><label for="input-secuencia">Secuencia separada por comas:</label><input type="text" id="input-secuencia" value="7, 11, 16, 22, 29"></div>
+        <div class="presets-row">
+          <span>Presets:</span>
+          <button class="btn-chip" data-seq="7, 11, 16, 22, 29">Cuadratica (+4, +5, +6...)</button>
+          <button class="btn-chip" data-seq="100, 93, 84, 73">Diferencias (-7, -9, -11...)</button>
+          <button class="btn-chip" data-seq="4, 16, 64, 256">Geometrica (*4)</button>
+          <button class="btn-chip" data-seq="6, 3, 12, 9, 36, 35">Dual (/2, *4, -3, *4, -1...)</button>
+        </div>
+        <button class="btn btn-primary" id="btn-analizar-secuencia">Analizar Patron</button>
+        <div class="result-box" id="res-secuencia">Esperando analisis...</div>
+      </div>
+    </section>
+
+    <!-- MODULO D -->
+    <section id="tab-modulo-d" class="tab-pane">
+      <div class="section-header"><h2>Modulo D: Suite de Pruebas Unitarias</h2><p>Ejecucion automatizada de casos normales y casos borde (edge-cases).</p></div>
+      <div class="test-runner-card">
+        <div class="test-controls">
+          <button class="btn btn-success btn-large" id="btn-run-all-tests">Ejecutar Todas las Pruebas</button>
+          <div class="test-summary" id="test-summary-badges"><span class="badge-status pending">Pendiente</span></div>
+        </div>
+        <div class="table-responsive">
+          <table class="test-table" id="test-results-table">
+            <thead><tr><th>ID</th><th>Prueba</th><th>Categoria</th><th>Estado</th><th>Detalle / Asersion</th></tr></thead>
+            <tbody id="test-results-body"><tr><td colspan="5" class="empty-state">Presiona "Ejecutar Todas las Pruebas" para iniciar.</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>Proyecto Integrador - Evaluacion Tecnica de Logica y Matematicas Computacionales</p>
+      <p class="footer-note">Supera los 10 tests de la suite antes de hacer entrega de tu repositorio en GitHub Pages.</p>
+    </div>
+  </footer>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
