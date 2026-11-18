@@ -2,7 +2,11 @@
  * Aplicacion Principal - Integracion de Modulos y UI
  */
 
-import { calcularProbabilidadDados, calcularPartidosTorneo, contarMultiplosMenores, calcularViajesMinimos } from "./modules/bairesdev.js";
+import {
+  calcularProbabilidadDados, calcularPartidosTorneo, contarMultiplosMenores, calcularViajesMinimos,
+  contarDigito, calcularEdadFutura, calcularPesoRecipiente, calcularDiferenciaIngreso,
+  calcularAhorroContado, calcularAlquiler
+} from "./modules/bairesdev.js";
 import { resolverCuadratica, evaluarPolinomio } from "./modules/cuadratica.js";
 import { analizarSecuencia } from "./modules/secuencias.js";
 import { ejecutarSuiteCompleta } from "./modules/test-suite.js";
@@ -10,6 +14,7 @@ import { ejecutarSuiteCompleta } from "./modules/test-suite.js";
 document.addEventListener("DOMContentLoaded", () => {
   initTabs();
   initModuloA();
+  initRetosNuevos();
   initModuloB();
   initModuloC();
   initModuloD();
@@ -109,6 +114,99 @@ function initModuloA() {
     } catch (e) {
       resBotellas.innerHTML = `<span style="color: var(--accent-red);">${e.message}</span>`;
     }
+  });
+}
+
+/* -------------------------------------------------------------
+   MODULO A: RETOS 5 A 10
+------------------------------------------------------------- */
+
+/**
+ * Conecta un boton con su calculo. Si el calculo lanza un error
+ * (validacion), el mensaje se muestra en rojo en la caja de resultado.
+ * @param {string} idBoton - id del boton
+ * @param {string} idResultado - id de la caja donde se muestra el resultado
+ * @param {Function} calcular - funcion que devuelve el HTML del resultado
+ */
+function conectarReto(idBoton, idResultado, calcular) {
+  const boton = document.getElementById(idBoton);
+  const resultado = document.getElementById(idResultado);
+  boton?.addEventListener("click", () => {
+    try {
+      resultado.innerHTML = calcular();
+    } catch (e) {
+      resultado.innerHTML = `<span style="color: var(--accent-red);">${e.message}</span>`;
+    }
+  });
+}
+
+/** Lee un input y lo convierte a numero ("" se vuelve NaN para que la validacion lo detecte) */
+function leerNumero(id) {
+  const texto = document.getElementById(id).value.trim();
+  return texto === "" ? NaN : Number(texto);
+}
+
+function initRetosNuevos() {
+  // Reto 5: Conteo de digitos
+  conectarReto("btn-calc-digito", "res-digito", () => {
+    const n = leerNumero("input-digito-n");
+    const d = leerNumero("input-digito-d");
+    const total = contarDigito(n, d);
+    return `Escribiendo los numeros del 1 al <strong>${n}</strong>,<br>` +
+           `el digito <strong>${d}</strong> aparece <strong>${total} veces</strong>.`;
+  });
+
+  // Reto 6: Edades
+  conectarReto("btn-calc-edad", "res-edad", () => {
+    const pablo = leerNumero("input-edad-pablo");
+    const k = leerNumero("input-edad-k");
+    const r = calcularEdadFutura(pablo, k);
+    return `Hoy: Pablo <strong>${pablo}</strong> años, hermana <strong>${r.edadHermana.toFixed(2)}</strong> años.<br>` +
+           `Dentro de <strong>${r.anios.toFixed(2)} años</strong> Pablo tendra <strong>${r.edadPabloFutura.toFixed(2)}</strong> ` +
+           `y su hermana <strong>${r.edadHermanaFutura.toFixed(2)}</strong> (exactamente la mitad).`;
+  });
+
+  // Reto 7: Recipiente
+  conectarReto("btn-calc-recipiente", "res-recipiente", () => {
+    const lleno = leerNumero("input-rec-lleno");
+    const parcial = leerNumero("input-rec-parcial");
+    const fraccion = leerNumero("input-rec-fraccion");
+    const r = calcularPesoRecipiente(lleno, parcial, fraccion);
+    return `Peso del contenido completo: <strong>${r.contenido} g</strong><br>` +
+           `Peso del recipiente vacio: <strong>${r.vacio} g</strong>`;
+  });
+
+  // Reto 8: Diferencia de ingresos
+  conectarReto("btn-calc-ingreso", "res-ingreso", () => {
+    const r = calcularDiferenciaIngreso(
+      leerNumero("input-ing-q1"), leerNumero("input-ing-p1"),
+      leerNumero("input-ing-q2"), leerNumero("input-ing-p2")
+    );
+    const signo = r.diferencia >= 0 ? "+" : "-";
+    return `Ingreso antes: <strong>$${r.ingreso1.toFixed(2)}</strong> | despues: <strong>$${r.ingreso2.toFixed(2)}</strong><br>` +
+           `Diferencia: <strong>${signo}$${Math.abs(r.diferencia).toFixed(2)} dolares</strong>`;
+  });
+
+  // Reto 9: Cuotas vs contado
+  conectarReto("btn-calc-cuotas", "res-cuotas", () => {
+    const r = calcularAhorroContado(
+      leerNumero("input-cuotas-n"), leerNumero("input-cuotas-valor"), leerNumero("input-cuotas-contado")
+    );
+    return `Total pagado a cuotas: <strong>$${r.totalCuotas.toFixed(2)}</strong><br>` +
+           (r.ahorro >= 0
+             ? `Ahorro pagando de contado: <strong>$${r.ahorro.toFixed(2)}</strong>`
+             : `Las cuotas salen <strong>$${Math.abs(r.ahorro).toFixed(2)}</strong> mas baratas que el contado`);
+  });
+
+  // Reto 10: Porcentaje inverso (Cascarita 3)
+  conectarReto("btn-calc-alquiler", "res-alquiler", () => {
+    const comida = leerNumero("input-alq-comida");
+    const pct = leerNumero("input-alq-pct");
+    const r = calcularAlquiler(comida, pct);
+    return `Alquiler: <strong>$${r.alquiler.toFixed(2)}</strong><br>` +
+           `Verificacion (comida / alquiler * 100) en JS: <strong>${r.porcentajeCalculado}</strong><br>` +
+           `Comparacion estricta (=== ${pct}): <strong>${r.comparacionEstricta}</strong><br>` +
+           `Comparacion segura con Number.EPSILON: <strong>${r.comparacionSegura}</strong>`;
   });
 }
 
