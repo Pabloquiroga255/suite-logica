@@ -1,5 +1,9 @@
 # Suite Matemática y Algorítmica (Proyecto Integrador)
 
+[![pages-build-deployment](https://github.com/Pabloquiroga255/suite-logica/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/Pabloquiroga255/suite-logica/actions/workflows/pages/pages-build-deployment)
+
+🌐 **Demo en vivo:** https://pabloquiroga255.github.io/suite-logica/
+
 Aplicación web interactiva que reúne retos de lógica (BairesDev), un solucionador de ecuaciones cuadráticas con gráfica, un detector de secuencias y una suite de pruebas unitarias en el navegador.
 
 **Estudiante:** Pablo Quiroga — SENA, Análisis y Desarrollo de Software (ADSO)
