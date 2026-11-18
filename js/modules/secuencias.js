@@ -101,9 +101,96 @@ export function analizarSecuencia(arr) {
     }
   }
 
+  // 5. Secuencia Dual (operaciones alternadas)
+  // Ejemplo: 6, 3, 12, 9, 36, 35
+  //   pasos pares   (6->3, 12->9, 36->35): -3, -3, -1  (sin regla fija)
+  //   pasos impares (3->12, 9->36)       : x4, x4      (regla fija)
+  // El siguiente paso (35 -> ?) es impar, entonces se aplica x4 => 140
+  const dual = analizarDual(arr);
+  if (dual) {
+    return dual;
+  }
+
   return {
     tipo: "PATRON_COMPLEJO",
     descripcion: "Patron no elemental o serie combinada",
     siguienteTermino: null
+  };
+}
+
+/**
+ * Revisa si una lista de pasos [desde, hasta] sigue una sola regla:
+ * siempre sumar el mismo numero o siempre multiplicar por el mismo numero.
+ * @param {number[][]} pasos - Pares [valorAnterior, valorSiguiente]
+ * @returns {{ operacion: string, valor: number } | null}
+ */
+function buscarReglaConstante(pasos) {
+  if (pasos.length < 2) return null;
+
+  // Regla de suma: la diferencia (hasta - desde) es igual en todos los pasos
+  const dif = pasos[0][1] - pasos[0][0];
+  if (pasos.every(([desde, hasta]) => Math.abs((hasta - desde) - dif) < 1e-9)) {
+    return { operacion: "suma", valor: dif };
+  }
+
+  // Regla de multiplicacion: la razon (hasta / desde) es igual en todos los pasos
+  if (pasos.every(([desde]) => desde !== 0)) {
+    const razon = pasos[0][1] / pasos[0][0];
+    if (pasos.every(([desde, hasta]) => Math.abs(hasta / desde - razon) < 1e-9)) {
+      return { operacion: "multiplica", valor: razon };
+    }
+  }
+
+  return null;
+}
+
+/**
+ * Detecta secuencias duales: los pasos se alternan entre dos grupos
+ * (pasos pares y pasos impares) y al menos el grupo del siguiente paso
+ * tiene una regla constante.
+ * @param {number[]} arr - Secuencia (minimo 5 terminos)
+ * @returns {object | null} Resultado o null si no es dual
+ */
+function analizarDual(arr) {
+  if (arr.length < 5) return null;
+
+  const pasosPares = [];
+  const pasosImpares = [];
+  for (let j = 0; j < arr.length - 1; j++) {
+    const paso = [arr[j], arr[j + 1]];
+    if (j % 2 === 0) {
+      pasosPares.push(paso);
+    } else {
+      pasosImpares.push(paso);
+    }
+  }
+
+  const reglaPares = buscarReglaConstante(pasosPares);
+  const reglaImpares = buscarReglaConstante(pasosImpares);
+
+  // El siguiente paso tiene indice (arr.length - 1): si es par usa la regla de pasos pares
+  const indiceSiguiente = arr.length - 1;
+  const reglaSiguiente = indiceSiguiente % 2 === 0 ? reglaPares : reglaImpares;
+  if (!reglaSiguiente) return null;
+
+  const ultimo = arr[arr.length - 1];
+  const siguienteTermino = reglaSiguiente.operacion === "suma"
+    ? ultimo + reglaSiguiente.valor
+    : ultimo * reglaSiguiente.valor;
+
+  const texto = (regla) => {
+    if (!regla) return "sin regla fija";
+    if (regla.operacion === "suma") {
+      return regla.valor >= 0 ? `+${regla.valor}` : `${regla.valor}`;
+    }
+    return `x${regla.valor}`;
+  };
+
+  return {
+    tipo: "DUAL_ALTERNADA",
+    descripcion: `Secuencia dual con operaciones alternadas: pasos pares (${texto(reglaPares)}), pasos impares (${texto(reglaImpares)})`,
+    reglaPares,
+    reglaImpares,
+    siguienteTermino
   };
 }
