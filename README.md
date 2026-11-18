@@ -57,3 +57,25 @@ Abrir http://localhost:8000 en el navegador.
 - `develop`: integración de cambios.
 - `feature/*`: una rama por funcionalidad, unida a `develop` mediante Pull Request.
 - Commits con Conventional Commits: `feat:`, `fix:`, `style:`, `test:`, `docs:`.
+
+## 6. Análisis de complejidad
+
+`n` = cantidad de términos de la secuencia, `N` = límite superior, `d` = cantidad de dígitos de `N`.
+
+| Algoritmo | Archivo | Tiempo | Espacio | Por qué |
+|---|---|---|---|---|
+| Probabilidad de dados | bairesdev.js | O(1) | O(1) | Recorre siempre las 36 combinaciones (6 × 6), no depende de la entrada. |
+| Partidos del torneo | bairesdev.js | O(1) | O(1) | Fórmula directa `n(n-1)/2`. |
+| Múltiplos menores | bairesdev.js | O(1) | O(1) | División entera `⌊(límite-1)/divisor⌋`, sin bucle. |
+| Viajes mínimos | bairesdev.js | O(1) | O(1) | Función techo `⌈total/capacidad⌉`. |
+| Conteo de dígitos | bairesdev.js | O(N · d) | O(d) | Recorre los N números y revisa cada dígito de su texto. |
+| Edades | bairesdev.js | O(1) | O(1) | Despeje algebraico `t = edad - 2·hermana`. |
+| Peso del recipiente | bairesdev.js | O(1) | O(1) | Sistema de 2 ecuaciones resuelto con una fórmula. |
+| Diferencia de ingresos | bairesdev.js | O(1) | O(1) | Dos multiplicaciones en centavos. |
+| Cuotas vs contado | bairesdev.js | O(1) | O(1) | Una multiplicación y una resta en centavos. |
+| Porcentaje inverso | bairesdev.js | O(1) | O(1) | Una división y una comparación con `Number.EPSILON`. |
+| Ecuación cuadrática | cuadratica.js | O(1) | O(1) | Número fijo de operaciones (discriminante, raíz, Citardauq). |
+| Gráfica de la parábola | app.js | O(S) | O(1) | Evalúa S = 120 puntos del Canvas. |
+| Detector de secuencias | secuencias.js | O(n) | O(n) | Calcula una vez las diferencias Δ₁ y Δ₂ y las guarda en arreglos. |
+| Secuencia dual | secuencias.js | O(n) | O(n) | Separa los pasos en pares e impares y revisa cada grupo una vez. |
+| Suite de pruebas | test-suite.js | O(T) | O(T) | Ejecuta T = 10 pruebas y guarda un resultado por prueba. |
