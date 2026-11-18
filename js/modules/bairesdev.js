@@ -117,6 +117,27 @@ function validarNumero(valor, nombre, minimo) {
 }
 
 /**
+ * Convierte pesos/dolares con decimales a centavos enteros.
+ * Trabajar en centavos evita los residuos de punto flotante (ej: 0.1 + 0.2).
+ * @param {number} valor - Monto con decimales (ej: 2.80)
+ * @returns {number} Monto en centavos (ej: 280)
+ */
+function aCentavos(valor) {
+  return Math.round(valor * 100);
+}
+
+/**
+ * Compara dos numeros decimales con tolerancia (Cascarita 3).
+ * En JS (2.80 / 8.75) * 100 da 32.00000000000001, asi que === 32 falla.
+ * @param {number} a
+ * @param {number} b
+ * @returns {boolean} true si la diferencia es despreciable
+ */
+export function sonCasiIguales(a, b) {
+  return Math.abs(a - b) < Number.EPSILON * 100;
+}
+
+/**
  * Reto 5: Conteo de un digito en todos los numeros de 1 a N
  * Ejemplo: del 1 al 30 el digito 1 aparece 13 veces.
  * Complejidad: O(N * cantidad de digitos de N)
@@ -202,5 +223,82 @@ export function calcularPesoRecipiente(pesoLleno, pesoParcial, fraccion) {
   return {
     vacio: Math.round(vacio * 100) / 100,
     contenido: Math.round(contenido * 100) / 100
+  };
+}
+
+/**
+ * Reto 8: Diferencia de ingresos al cambiar el precio
+ * Todo se calcula en centavos enteros y solo al final se pasa a dolares.
+ * @param {number} q1 - Vasos vendidos antes
+ * @param {number} p1 - Precio antes (centavos)
+ * @param {number} q2 - Vasos vendidos despues
+ * @param {number} p2 - Precio despues (centavos)
+ * @returns {{ ingreso1: number, ingreso2: number, diferencia: number }} Valores en dolares
+ */
+export function calcularDiferenciaIngreso(q1, p1, q2, p2) {
+  validarEntero(q1, "Los vasos iniciales", 0);
+  validarEntero(p1, "El precio inicial", 0);
+  validarEntero(q2, "Los vasos finales", 0);
+  validarEntero(p2, "El precio final", 0);
+
+  const ingreso1Centavos = q1 * p1;
+  const ingreso2Centavos = q2 * p2;
+
+  return {
+    ingreso1: ingreso1Centavos / 100,
+    ingreso2: ingreso2Centavos / 100,
+    diferencia: (ingreso2Centavos - ingreso1Centavos) / 100
+  };
+}
+
+/**
+ * Reto 9: Ahorro al pagar de contado en vez de cuotas
+ * Se trabaja en centavos para que 12 cuotas de 88.10 no den residuos.
+ * @param {number} nCuotas - Cantidad de cuotas
+ * @param {number} valorCuota - Valor de cada cuota
+ * @param {number} precioContado - Precio pagando de contado
+ * @returns {{ totalCuotas: number, ahorro: number }}
+ */
+export function calcularAhorroContado(nCuotas, valorCuota, precioContado) {
+  validarEntero(nCuotas, "La cantidad de cuotas", 1);
+  validarNumero(valorCuota, "El valor de la cuota", 0);
+  validarNumero(precioContado, "El precio de contado", 0);
+
+  const totalCentavos = nCuotas * aCentavos(valorCuota);
+  const ahorroCentavos = totalCentavos - aCentavos(precioContado);
+
+  return {
+    totalCuotas: totalCentavos / 100,
+    ahorro: ahorroCentavos / 100
+  };
+}
+
+/**
+ * Reto 10: Presupuesto y porcentaje inverso (incluye la Cascarita 3)
+ * Si la comida es el P% del alquiler: alquiler = comida * 100 / P
+ * Luego verifica con tolerancia que comida sea realmente el P% del alquiler.
+ * @param {number} comida - Gasto en comida (ej: 2.80)
+ * @param {number} porcentaje - Porcentaje que representa (ej: 32)
+ * @returns {{ alquiler: number, porcentajeCalculado: number, comparacionEstricta: boolean, comparacionSegura: boolean }}
+ */
+export function calcularAlquiler(comida, porcentaje) {
+  validarNumero(comida, "El gasto en comida", 0);
+  validarNumero(porcentaje, "El porcentaje", 0);
+  if (porcentaje === 0) {
+    throw new Error("El porcentaje debe ser mayor que 0 (no se puede dividir entre 0).");
+  }
+
+  // Se divide en centavos y se redondea al centavo mas cercano
+  const alquilerCentavos = Math.round((aCentavos(comida) * 100) / porcentaje);
+  const alquiler = alquilerCentavos / 100;
+
+  // Verificacion: ¿comida / alquiler * 100 es igual al porcentaje?
+  const porcentajeCalculado = alquiler === 0 ? 0 : (comida / alquiler) * 100;
+
+  return {
+    alquiler,
+    porcentajeCalculado,
+    comparacionEstricta: porcentajeCalculado === porcentaje,
+    comparacionSegura: sonCasiIguales(porcentajeCalculado, porcentaje)
   };
 }
