@@ -16,8 +16,8 @@
         <p class="subtitle">Logica Computacional, Algebra Cuadratica y Precision Numerica</p>
       </div>
       <div class="student-info">
-        <div class="info-tag"><strong>Estudiante:</strong> <span class="placeholder">[Tu Nombre Completo]</span></div>
-        <div class="info-tag"><strong>Repositorio:</strong> <span class="placeholder">[git: tu-usuario/suite-logica]</span></div>
+        <div class="info-tag"><strong>Estudiante:</strong> <span class="placeholder">Pablo Quiroga</span></div>
+        <div class="info-tag"><strong>Repositorio:</strong> <span class="placeholder">Pabloquiroga255/suite-logica</span></div>
       </div>
     </div>
   </header>
@@ -75,6 +75,72 @@
           </div>
           <button class="btn btn-primary" id="btn-calc-botellas">Calcular Viajes</button>
           <div class="result-box" id="res-botellas">Esperando calculo...</div>
+        </div>
+        <div class="card">
+          <div class="card-header"><span class="card-num">#05</span><h3>Conteo de Digitos</h3></div>
+          <p class="card-desc">Cuantas veces aparece un digito al escribir todos los numeros de 1 a N.</p>
+          <div class="form-row">
+            <div class="form-group"><label for="input-digito-n">Limite N:</label><input type="number" id="input-digito-n" value="30" min="1"></div>
+            <div class="form-group"><label for="input-digito-d">Digito (0 a 9):</label><input type="number" id="input-digito-d" value="1" min="0" max="9"></div>
+          </div>
+          <button class="btn btn-primary" id="btn-calc-digito">Contar Digito</button>
+          <div class="result-box" id="res-digito">Esperando calculo...</div>
+        </div>
+        <div class="card">
+          <div class="card-header"><span class="card-num">#06</span><h3>Problema de Edades</h3></div>
+          <p class="card-desc">Pablo tiene k veces la edad de su hermana. ¿Cuando tendra el doble?</p>
+          <div class="form-row">
+            <div class="form-group"><label for="input-edad-pablo">Edad de Pablo:</label><input type="number" id="input-edad-pablo" value="20" min="1"></div>
+            <div class="form-group"><label for="input-edad-k">Veces mayor (k):</label><input type="number" id="input-edad-k" value="4" min="2" step="any"></div>
+          </div>
+          <button class="btn btn-primary" id="btn-calc-edad">Calcular Edad</button>
+          <div class="result-box" id="res-edad">Esperando calculo...</div>
+        </div>
+        <div class="card">
+          <div class="card-header"><span class="card-num">#07</span><h3>Recipiente y Proporciones</h3></div>
+          <p class="card-desc">Peso del recipiente vacio conociendo el peso lleno y parcialmente lleno.</p>
+          <div class="form-row">
+            <div class="form-group"><label for="input-rec-lleno">Peso lleno (g):</label><input type="number" id="input-rec-lleno" value="780" step="any"></div>
+            <div class="form-group"><label for="input-rec-parcial">Peso parcial (g):</label><input type="number" id="input-rec-parcial" value="590" step="any"></div>
+            <div class="form-group"><label for="input-rec-fraccion">Fraccion:</label><input type="number" id="input-rec-fraccion" value="0.5" min="0" max="0.99" step="any"></div>
+          </div>
+          <button class="btn btn-primary" id="btn-calc-recipiente">Calcular Peso Vacio</button>
+          <div class="result-box" id="res-recipiente">Esperando calculo...</div>
+        </div>
+        <div class="card">
+          <div class="card-header"><span class="card-num">#08</span><h3>Diferencia de Ingresos</h3></div>
+          <p class="card-desc">Cambio en el ingreso al ajustar el precio (calculado en centavos enteros).</p>
+          <div class="form-row">
+            <div class="form-group"><label for="input-ing-q1">Vasos antes:</label><input type="number" id="input-ing-q1" value="20" min="0"></div>
+            <div class="form-group"><label for="input-ing-p1">Precio antes (c):</label><input type="number" id="input-ing-p1" value="10" min="0"></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label for="input-ing-q2">Vasos despues:</label><input type="number" id="input-ing-q2" value="15" min="0"></div>
+            <div class="form-group"><label for="input-ing-p2">Precio despues (c):</label><input type="number" id="input-ing-p2" value="20" min="0"></div>
+          </div>
+          <button class="btn btn-primary" id="btn-calc-ingreso">Calcular Diferencia</button>
+          <div class="result-box" id="res-ingreso">Esperando calculo...</div>
+        </div>
+        <div class="card">
+          <div class="card-header"><span class="card-num">#09</span><h3>Cuotas vs Contado</h3></div>
+          <p class="card-desc">Ahorro exacto al pagar de contado en vez de a cuotas.</p>
+          <div class="form-row">
+            <div class="form-group"><label for="input-cuotas-n">Cuotas:</label><input type="number" id="input-cuotas-n" value="12" min="1"></div>
+            <div class="form-group"><label for="input-cuotas-valor">Valor cuota:</label><input type="number" id="input-cuotas-valor" value="88" step="any"></div>
+            <div class="form-group"><label for="input-cuotas-contado">Contado:</label><input type="number" id="input-cuotas-contado" value="780" step="any"></div>
+          </div>
+          <button class="btn btn-primary" id="btn-calc-cuotas">Calcular Ahorro</button>
+          <div class="result-box" id="res-cuotas">Esperando calculo...</div>
+        </div>
+        <div class="card">
+          <div class="card-header"><span class="card-num">#10</span><h3>Porcentaje Inverso (Cascarita 3)</h3></div>
+          <p class="card-desc">La comida es el P% del alquiler. Halla el alquiler y verifica con Number.EPSILON.</p>
+          <div class="form-row">
+            <div class="form-group"><label for="input-alq-comida">Gasto comida:</label><input type="number" id="input-alq-comida" value="0.7" step="any"></div>
+            <div class="form-group"><label for="input-alq-pct">Porcentaje (P):</label><input type="number" id="input-alq-pct" value="7" step="any"></div>
+          </div>
+          <button class="btn btn-primary" id="btn-calc-alquiler">Calcular Alquiler</button>
+          <div class="result-box" id="res-alquiler">Esperando calculo...</div>
         </div>
       </div>
     </section>
